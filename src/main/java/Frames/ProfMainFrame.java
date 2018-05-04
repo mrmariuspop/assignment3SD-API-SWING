@@ -13,7 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Clients.StudentClient;
+import Clients.SubmissionClient;
 import models.Student;
+import models.Submission;
 
 		
 public class ProfMainFrame extends JFrame implements ActionListener {
@@ -25,36 +27,70 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 	 JTextField emailTxt = new JTextField();
 	 
 	 JButton createStudBtn = new JButton("Create");
-	 JButton labsBtn = new JButton("Labs");
+	 JButton labsBtn = new JButton("Laboratories");
+	 JButton assBtn = new JButton("Assignments");
+	 JButton attBtn = new JButton("Attendences");
 
-	 
 	 JLabel avaiLbl = new JLabel("Available Students");
+	 
+//	 JComboBox studentsIds = new JComboBox();
+//	 
+//	 {
+//	 try {
+//		    Long[] idsArray = new Long[10];
+//		    int i = 0;
+//		    
+//		    StudentClient x = new StudentClient();
+//			List<Student> lista = x.getAllStudents();
+//			
+//			for (Student iterator : lista) {
+//				Long da = iterator.getStudentId();
+//				
+//				idsArray[i] = da;
+//				i++;
+//
+//			}
+//			
+//			studentsIds = new JComboBox(idsArray);
+//
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	 }
+//	 
 	 JComboBox studentsIds = new JComboBox();
-	 
-	 {
-	 try {
-		    Long[] idsArray = new Long[10];
-		    int i = 0;
-		    
-		    StudentClient x = new StudentClient();
-			List<Student> lista = x.getAllStudents();
-			
-			for (Student iterator : lista) {
-				Long da = iterator.getStudentId();
-				
-				idsArray[i] = da;
-				i++;
 
-			}
-			
-			studentsIds = new JComboBox(idsArray);
-
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	 }
 	 
+//	 JComboBox subIds = new JComboBox();
+//	 
+//	 {
+//	 try {
+//		    Long[] idsArray = new Long[10];
+//		    int i = 0;
+//		    
+//		    SubmissionClient x = new SubmissionClient();
+//			List<Submission> lista = x.getAllSubmissions();
+//			
+//			for (Submission iterator : lista) {
+//				Long da = iterator.getSubmissionId();
+//				
+//				idsArray[i] = da;
+//				i++;
+//
+//			}
+//			
+//			subIds = new JComboBox(idsArray);
+//
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	 }
+	 
+	 JComboBox subIds = new JComboBox();
+
+
 	 JLabel deleteLbl = new JLabel("Delete Student");
 	 JLabel idLbl = new JLabel("id");
 	 JTextField idTxt = new JTextField();
@@ -74,6 +110,9 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 	 JLabel newGradelbl = new JLabel("grade");
 	 JTextField newGradeTxt = new JTextField();
 	 
+	 
+	 JLabel allSubLbl = new JLabel("Available Submissions");
+	 
 	 JButton gradeBtn = new JButton("Grade");
 	 
 	public ProfMainFrame()
@@ -88,6 +127,7 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 		panel.setLayout(null);
 		
 		panel.add(emailLbl);
+		panel.add(allSubLbl);
 		panel.add(emailTxt);
 		panel.add(createStudBtn);
 		panel.add(createLbl);
@@ -112,8 +152,14 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 		panel.add(avaiLbl);
 		panel.add(studentsIds);
 		panel.add(labsBtn);
+		panel.add(subIds);
+		panel.add(assBtn);
+		panel.add(attBtn);
 		
 		submLbl.setBounds(80+600,20,160,25);;
+		allSubLbl.setBounds(80+900,20,160,25);;
+		subIds.setBounds(80+900,60,160,25);;
+		
 		subIdLbl.setBounds(590, 50, 80, 25);
 		subIdTxt.setBounds(70+600, 50, 160, 25);
 		newGradelbl.setBounds(610, 100, 80, 25);
@@ -139,14 +185,17 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 		
 		avaiLbl.setBounds(80+300,320,160,25);
 		studentsIds.setBounds(80+300,350,160,25);
-		labsBtn.setBounds(690, 400, 80, 25);
-		
+		labsBtn.setBounds(690, 350, 120, 25);
+		assBtn.setBounds(690, 390, 120, 25);
+		attBtn.setBounds(690, 430, 120, 25);
+
 		createStudBtn.addActionListener(this);
 		deleteStudBtn.addActionListener(this);
 		GetStudBtn.addActionListener(this);
 		gradeBtn.addActionListener(this);
 		labsBtn.addActionListener(this);
-
+		attBtn.addActionListener(this);
+		assBtn.addActionListener(this);
 
 //		JOptionPane.showMessageDialog(null, "Welcome to the Nation Teather fom Cluj-Napoca!", "Info", JOptionPane.INFORMATION_MESSAGE);
 
@@ -156,13 +205,12 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == createStudBtn) {
-			StudentClient c1 = new StudentClient();
 			
 			String aux = emailTxt.getText();
 			if (aux.contains("@")) 
 			{
 			try {
-				c1.postStudentAsProff(aux);
+				StudentClient.postStudentAsProff(aux);
 				JOptionPane.showMessageDialog(null, "Student succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
 
 			} catch (Exception e1) {
@@ -178,11 +226,10 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource() == deleteStudBtn) {
-			StudentClient c1 = new StudentClient();
 			Student auxiliar = new Student();
 			
 			try {
-				auxiliar = c1.getStudentById(idTxt.getText());
+				auxiliar = StudentClient.getStudentById(idTxt.getText());
 			} catch (Exception e1) {
 
 				JOptionPane.showMessageDialog(null, "Student not found in the database", "Error", JOptionPane.ERROR_MESSAGE);			
@@ -190,7 +237,7 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 				}
 			
 			try {
-				c1.deleteStudentById(idTxt.getText());
+				StudentClient.deleteStudentById(idTxt.getText());
 				JOptionPane.showMessageDialog(null, "Student succesfuly deleted!", "Info", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
@@ -199,11 +246,10 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == GetStudBtn) 
 		{
-			StudentClient c1 = new StudentClient();
 			try {
 				Student retrieved = new Student();
 				
-				retrieved = c1.getStudentById(getIdTxt.getText());
+				retrieved = StudentClient.getStudentById(getIdTxt.getText());
 				JOptionPane.showMessageDialog(null, "Student Id = "+retrieved.getStudentId()+"\n" +"Student Fullname = "+retrieved.getFullname()+"\n" + "Student Email = " + retrieved.getEmail()+ " " , "Info", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, "Student not found!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -213,12 +259,52 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == gradeBtn) 
 		{
-			//wait for implement
+			SubmissionClient c1 = new SubmissionClient();
 			
+			if (newGradeTxt.getText().trim().isEmpty()) 
+			{
+				JOptionPane.showMessageDialog(null, "Grade can not be blank!", "Error", JOptionPane.ERROR_MESSAGE);
+
+			}
+			else 
+			{
+				if(Integer.parseInt(newGradeTxt.getText()) > 0 && Integer.parseInt(newGradeTxt.getText()) < 11) 
+				{
+					try {
+						c1.gradeSubmission(subIdTxt.getText(), newGradeTxt.getText());
+						JOptionPane.showMessageDialog(null, "Student succesfuly graded!", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						JOptionPane.showMessageDialog(null, "Submission id invalid!", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else 
+				{
+					JOptionPane.showMessageDialog(null, "Invalid Grade!", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+
+				}
+			}
+			
+			
+			
+
 		}
 		if (e.getSource() == labsBtn) 
 		{
 			LabsFrame l1 = new LabsFrame();
+			
+		} 
+		
+		if (e.getSource() == assBtn) 
+		{
+			AssignmentFrame l1 = new AssignmentFrame();
+			
+		} 
+		if (e.getSource() == attBtn) 
+		{
+			AttFrame l1 = new AttFrame();
 			
 		} 
 		

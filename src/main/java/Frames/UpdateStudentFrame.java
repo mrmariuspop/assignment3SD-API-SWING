@@ -85,7 +85,7 @@ public class UpdateStudentFrame extends JFrame implements ActionListener {
 			StudentClient c1 = new StudentClient();
 			
 			ReadFromFile a1 = new ReadFromFile();
-			String pe = a1.readFrom();
+			String pe = a1.readFrom("idUpdate.txt");
 			System.out.println("-->"+pe+"<--");
 			
 			try {

@@ -114,7 +114,7 @@ public class LaboratoryClient {
             for(int i=0; i<jsonArray.length(); i++) {
             	Laboratory p = new Laboratory(); 
             	
-            	p.setLabId(jsonArray.getJSONObject(i).getLong("laboratoryUid"));
+            	p.setLaboratoryUid(jsonArray.getJSONObject(i).getLong("laboratoryUid"));
             	p.setCurricula(jsonArray.getJSONObject(i).getString("curricula"));
             	p.setDate(jsonArray.getJSONObject(i).getString("date"));
             	p.setDescription(jsonArray.getJSONObject(i).getString("description"));
@@ -173,7 +173,7 @@ public class LaboratoryClient {
 
     }
 	
-	 public Student getLabById(String id) {
+	 public static Laboratory getLabById(String id) {
 	        try {
 
 	            DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -196,9 +196,9 @@ public class LaboratoryClient {
 	            System.out.println("Output from Server .... \n");
 	            
 	            ObjectMapper objMap = new ObjectMapper();
-	            Student tabusca = new Student();
+	            Laboratory tabusca = new Laboratory();
 	            output = br.readLine();
-	            tabusca = objMap.readValue(output, Student.class);
+	            tabusca = objMap.readValue(output, Laboratory.class);
 	            
 	            System.out.println(tabusca.toString());
 	            
@@ -216,4 +216,6 @@ public class LaboratoryClient {
 	        }
 	        return null;
 	    }
+	 
+	
 }

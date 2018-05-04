@@ -12,6 +12,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import Clients.StudentClient;
+import Services.WriteToFile;
+import models.Student;
 
 		
 public class StudLoginFrame extends JFrame implements ActionListener {
@@ -67,8 +69,14 @@ public class StudLoginFrame extends JFrame implements ActionListener {
 			StudentClient c1 = new StudentClient();
 			
 			try {
-				c1.getStudentByEmailAndPassword(userTxt.getText(), passTxt.getText());
+				Student aux = c1.getStudentByEmailAndPassword(userTxt.getText(), passTxt.getText());
+				
+				WriteToFile d1 = new WriteToFile();
+				d1.whenWriteStringUsingBufferedWritter_thenCorrect(String.valueOf(aux.getStudentId()),"Login.txt");
+				
 				StudMainFrame s1 = new StudMainFrame();
+				
+				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				JOptionPane.showMessageDialog(null, "Username/password not found!", "Error", JOptionPane.ERROR_MESSAGE);			}

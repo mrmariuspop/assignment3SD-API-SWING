@@ -2,7 +2,7 @@ package models;
 
 public class Laboratory {
 
-	private Long labId;
+	private Long laboratoryUid;
 	private Long number;
     private String date;
     private String title;
@@ -14,9 +14,9 @@ public class Laboratory {
 
     
     
-	public Laboratory(Long labId, Long number, String date, String title, String curricula, String description) {
+	public Laboratory(Long laboratoryUid, Long number, String date, String title, String curricula, String description) {
 		super();
-		this.labId = labId;
+		this.laboratoryUid = laboratoryUid;
 		this.number = number;
 		this.date = date;
 		this.title = title;
@@ -26,13 +26,18 @@ public class Laboratory {
 
 
 
-	public Long getLabId() {
-		return labId;
+
+	public Long getLaboratoryUid() {
+		return laboratoryUid;
 	}
 
-	public void setLabId(Long labId) {
-		this.labId = labId;
+
+
+	public void setLaboratoryUid(Long laboratoryUid) {
+		this.laboratoryUid = laboratoryUid;
 	}
+
+
 
 	public Long getNumber() {
 		return number;
@@ -77,7 +82,7 @@ public class Laboratory {
 	@Override
     public String toString() {
         return "Laboratory{" +
-                "laboratoryUid=" + labId +
+                "laboratoryUid=" + laboratoryUid +
                 ", number='" + number + '\'' +
                 ", date='" + date + '\'' +
                 ", title='" + title + '\'' +

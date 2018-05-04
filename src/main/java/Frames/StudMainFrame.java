@@ -12,7 +12,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Clients.LaboratoryClient;
 import Clients.StudentClient;
+import Clients.SubmissionClient;
+import Services.ReadFromFile;
+import models.Laboratory;
 import models.Student;
 
 		
@@ -24,57 +28,78 @@ public class StudMainFrame extends JFrame implements ActionListener {
 	 JLabel assIdLbl = new JLabel("assigId.");
 	 JTextField assIdTxt = new JTextField();
 	 
+	 JLabel linkLbl = new JLabel("link");
+	 JTextField linkTxt = new JTextField("www.github.com/mrmariuspop");
+	 
+	 JLabel remarkLbl = new JLabel("remark");
+	 JTextField remarkTxt = new JTextField("Submission Sent");
+	 
 	 JButton createSubmissionBtn = new JButton("Create");
-	 JButton labsBtn = new JButton("Labs");
 
 	 
-	 JLabel avaiLbl = new JLabel("Available Students");
-	 JComboBox studentsIds = new JComboBox();
+//	 JComboBox studentsIds = new JComboBox();
+//	 
+//	 {
+//	 try {
+//		    Long[] idsArray = new Long[10];
+//		    int i = 0;
+//		    
+//		    StudentClient x = new StudentClient();
+//			List<Student> lista = x.getAllStudents();
+//			
+//			for (Student iterator : lista) {
+//				Long da = iterator.getStudentId();
+//				
+//				idsArray[i] = da;
+//				i++;
+//
+//			}
+//			
+//			studentsIds = new JComboBox(idsArray);
+//
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	 }
+//	 JComboBox labs = new JComboBox();
+////	 
+//	 {
+//	 try {
+//		    Long[] idsArray = new Long[10];
+//		    int i = 0;
+//		    
+//		    StudentClient x = new StudentClient();
+//			List<Laboratory> lista = x.getAllLaboratories();
+//			
+//			for (Laboratory iterator : lista) {
+//				Long da = iterator.getLaboratoryUid();
+//				
+//				idsArray[i] = da;
+//				i++;
+//
+//			}
+//			
+//			labs = new JComboBox(idsArray);
+//
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	 }
+	 JComboBox labs = new JComboBox();
 	 
-	 {
-	 try {
-		    Long[] idsArray = new Long[10];
-		    int i = 0;
-		    
-		    StudentClient x = new StudentClient();
-			List<Student> lista = x.getAllStudents();
-			
-			for (Student iterator : lista) {
-				Long da = iterator.getStudentId();
-				
-				idsArray[i] = da;
-				i++;
-
-			}
-			
-			studentsIds = new JComboBox(idsArray);
-
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	 }
 	 
-	 JLabel deleteLbl = new JLabel("Delete Student");
-	 JLabel idLbl = new JLabel("id");
-	 JTextField idTxt = new JTextField();
+	 JLabel deleteLbl = new JLabel("Available Laboratories");
 	 
-	 JButton deleteStudBtn = new JButton("Delete");
 	 
-	 JLabel getStudLbl = new JLabel("Get Student by Id");
-	 JLabel getIdLbl = new JLabel("id");
+	 JLabel getLabLbl = new JLabel("Get Laboratory by Id");
+	 JLabel labIdTxt = new JLabel("labId");
 	 JTextField getIdTxt = new JTextField();
 	 
-	 JButton GetStudBtn = new JButton("Get");
+	 JButton getLabBtn = new JButton("Get");
 	 
-	 JLabel submLbl = new JLabel("Grade Submission");
-	 JLabel subIdLbl = new JLabel("submissionId");
-	 JTextField subIdTxt = new JTextField();
 	 
-	 JLabel newGradelbl = new JLabel("grade");
-	 JTextField newGradeTxt = new JTextField();
-	 
-	 JButton gradeBtn = new JButton("Grade");
 	 
 	 JLabel dateLbl = new JLabel("date");
 	 JTextField dateTxt = new JTextField();
@@ -96,64 +121,48 @@ public class StudMainFrame extends JFrame implements ActionListener {
 		panel.add(assIdTxt);
 		panel.add(createSubmissionBtn);
 		panel.add(createLbl);
+		panel.add(labs);
 		
-		panel.add(submLbl);
-		panel.add(subIdLbl);
-		panel.add(subIdTxt);
-		panel.add(newGradelbl);
-		panel.add(newGradeTxt);
-		panel.add(gradeBtn);
 		
 		panel.add(deleteLbl);
-		panel.add(idLbl);
-		panel.add(idTxt);
-		panel.add(deleteStudBtn);
 		
-		panel.add(getStudLbl);
-		panel.add(getIdLbl);
+		panel.add(getLabLbl);
+		panel.add(labIdTxt);
 		panel.add(getIdTxt);
-		panel.add(GetStudBtn);
+		panel.add(getLabBtn);
 		
-		panel.add(avaiLbl);
-		panel.add(studentsIds);
-		panel.add(labsBtn);
+		panel.add(remarkLbl);
+		panel.add(remarkTxt);
+		panel.add(linkLbl);
+		panel.add(linkTxt);
 		
-		submLbl.setBounds(80+600,20,160,25);;
-		subIdLbl.setBounds(590, 50, 80, 25);
-		subIdTxt.setBounds(70+600, 50, 160, 25);
-		newGradelbl.setBounds(610, 100, 80, 25);
-		newGradeTxt.setBounds(670, 100, 160, 25);
-		gradeBtn.setBounds(90+600, 150, 80, 25);
+		
 
 		
 		createLbl.setBounds(80,20,160,25);;
 		assIdLbl.setBounds(10, 50, 80, 25);
 		assIdTxt.setBounds(70, 50, 160, 25);
-		createSubmissionBtn.setBounds(90, 200, 80, 25);
+		createSubmissionBtn.setBounds(90, 230, 80, 25);
 		
 		dateLbl.setBounds(10,90,80,25);
+		linkLbl.setBounds(10,130,80,25);
+		remarkLbl.setBounds(10,170,80,25);
 		dateTxt.setBounds(70,90,160,25);
+		linkTxt.setBounds(70,130,160,25);
+		remarkTxt.setBounds(70,170,160,25);
 		
 		deleteLbl.setBounds(80+300,20,160,25);;
-		idLbl.setBounds(10+300, 50, 80, 25);
-		idTxt.setBounds(70+300, 50, 160, 25);
-		deleteStudBtn.setBounds(90+300, 100, 80, 25);
+		labs.setBounds(70+300, 80, 160, 25);
 		
-		getStudLbl.setBounds(80,20+300,160,25);;
-		getIdLbl.setBounds(10, 50+300, 80, 25);
+		getLabLbl.setBounds(80,20+300,160,25);;
+		labIdTxt.setBounds(10, 50+300, 80, 25);
 		getIdTxt.setBounds(70, 50+300, 160, 25);
-		GetStudBtn.setBounds(90, 100+300, 80, 25);
+		getLabBtn.setBounds(90, 100+300, 80, 25);
 		
 		
-		avaiLbl.setBounds(80+300,320,160,25);
-		studentsIds.setBounds(80+300,350,160,25);
-		labsBtn.setBounds(690, 400, 80, 25);
 		
 		createSubmissionBtn.addActionListener(this);
-		deleteStudBtn.addActionListener(this);
-		GetStudBtn.addActionListener(this);
-		gradeBtn.addActionListener(this);
-		labsBtn.addActionListener(this);
+		getLabBtn.addActionListener(this);
 
 
 //		JOptionPane.showMessageDialog(null, "Welcome to the Nation Teather fom Cluj-Napoca!", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -164,71 +173,55 @@ public class StudMainFrame extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == createSubmissionBtn) {
-			StudentClient c1 = new StudentClient();
 			
-			String aux = assIdTxt.getText();
-			if (aux.contains("@")) 
+			if(assIdTxt.getText().trim().isEmpty() || dateTxt.getText().trim().isEmpty()) 
 			{
-			try {
-				c1.postStudentAsProff(aux);
-				JOptionPane.showMessageDialog(null, "Student succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "No field can be left empty!", "Error", JOptionPane.ERROR_MESSAGE);
 
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			}
 			else 
 			{
-				JOptionPane.showMessageDialog(null, "Invalid Email", "Error", JOptionPane.ERROR_MESSAGE);			
+				try {
+					ReadFromFile a1 = new ReadFromFile();
+					String pe = a1.readFrom("Login.txt");
+					
+					SubmissionClient.postSubmission(assIdTxt.getText(), dateTxt.getText(), pe);
+					JOptionPane.showMessageDialog(null, "Submission succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
+					
+					StudMainFrame p1 = new StudMainFrame();
 
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
+			
+			
 		}
 		
-		if (e.getSource() == deleteStudBtn) {
-			StudentClient c1 = new StudentClient();
-			Student auxiliar = new Student();
+		if (e.getSource() == getLabBtn) {
 			
-			try {
-				auxiliar = c1.getStudentById(idTxt.getText());
-			} catch (Exception e1) {
+			if (getIdTxt.getText().trim().isEmpty()) 
+			{
+				JOptionPane.showMessageDialog(null, "Field can not be left empty!", "Error", JOptionPane.ERROR_MESSAGE);
 
-				JOptionPane.showMessageDialog(null, "Student not found in the database", "Error", JOptionPane.ERROR_MESSAGE);			
-				return;
+			}
+			else 
+			{
+				Laboratory aux = new Laboratory();
+				try {
+					aux = LaboratoryClient.getLabById(getIdTxt.getText());
+					JOptionPane.showMessageDialog(null, "Laboratory title = " + aux.getTitle() + "\nLaboratory curricula ="+ aux.getCurricula() + "\nLaboratory description ="+ aux.getDescription()+"" , "Info", JOptionPane.INFORMATION_MESSAGE);
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Laboratory not found!", "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			
-			try {
-				c1.deleteStudentById(idTxt.getText());
-				JOptionPane.showMessageDialog(null, "Student succesfuly deleted!", "Info", JOptionPane.INFORMATION_MESSAGE);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
-		}
-		if (e.getSource() == GetStudBtn) 
-		{
-			StudentClient c1 = new StudentClient();
-			try {
-				Student retrieved = new Student();
-				
-				retrieved = c1.getStudentById(getIdTxt.getText());
-				JOptionPane.showMessageDialog(null, "Student Id = "+retrieved.getStudentId()+"\n" +"Student Fullname = "+retrieved.getFullname()+"\n" + "Student Email = " + retrieved.getEmail()+ " " , "Info", JOptionPane.INFORMATION_MESSAGE);
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, "Student not found!", "Error", JOptionPane.ERROR_MESSAGE);
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		if (e.getSource() == gradeBtn) 
-		{
-			//wait for implement
 			
+
 		}
-		if (e.getSource() == labsBtn) 
-		{
-			LabsFrame l1 = new LabsFrame();
-			
-		} 
+		
 		
 	}
 	

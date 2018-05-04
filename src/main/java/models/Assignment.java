@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Assignment implements Serializable {
 
-	private Long assignmentId;
+	private Long assigmentUid;
     private String name;
     private String deadline;
     private String description;
@@ -17,20 +17,20 @@ public class Assignment implements Serializable {
     public Assignment() {
     }
 
-    public Assignment(Long assignmentId, String name, String deadline, String description) {
-        this.assignmentId = assignmentId;
+    public Assignment(Long assigmentUid, String name, String deadline, String description) {
+        this.assigmentUid = assigmentUid;
     	this.name = name;
         this.deadline = deadline;
         this.description = description;
     }
     
 
-    public Long getAssignmentId() {
-		return assignmentId;
+    public Long getAssignmentUid() {
+		return assigmentUid;
 	}
 
-	public void setAssignmentId(Long assignmentId) {
-		this.assignmentId = assignmentId;
+	public void setAssignmentUid(Long assigmentUid) {
+		this.assigmentUid = assigmentUid;
 	}
 
 	public Long getLaboratoryId() {
@@ -68,7 +68,7 @@ public class Assignment implements Serializable {
     @Override
     public String toString() {
         return "Assigment{" +
-        		"id = " + assignmentId + '\'' + 
+        		"id = " + assigmentUid + '\'' + 
                 "name='" + name + '\'' +
                 ", deadline='" + deadline + '\'' +
                 ", description='" + description + '\'' +

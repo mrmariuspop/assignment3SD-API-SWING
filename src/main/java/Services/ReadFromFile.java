@@ -6,12 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class ReadFromFile {
-	public String readFrom() {
+	public String readFrom(String fileName) {
 
         // The name of the file to open.
-        String fileName = "idUpdate.txt";
 
-        // This will reference one line at a time
+        // This will reference one line at a stime
         String line = null;
 
         try {

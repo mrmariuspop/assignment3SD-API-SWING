@@ -67,7 +67,7 @@ public class StudRegisterFrame extends JFrame implements ActionListener {
 				aux = c1.getStudentByEmailAndToken(userTxt.getText(), passTxt.getText());
 				
 				WriteToFile d1 = new WriteToFile();
-				d1.whenWriteStringUsingBufferedWritter_thenCorrect(String.valueOf(aux.getStudentId()));
+				d1.whenWriteStringUsingBufferedWritter_thenCorrect(String.valueOf(aux.getStudentId()),"idUpdate.txt");
 				
 				UpdateStudentFrame a1 = new UpdateStudentFrame();
 			} catch (Exception e1) {

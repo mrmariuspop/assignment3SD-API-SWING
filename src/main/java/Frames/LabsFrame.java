@@ -41,36 +41,37 @@ public class LabsFrame extends JFrame implements ActionListener {
 	 
 	 JButton createLabBtn = new JButton("Create");
 	 
-	 JComboBox labsList = new JComboBox();
 	 
 	 JLabel delLbl = new JLabel("Delete Laboratory");
 	 JTextField delTxt = new JTextField();
 	 JButton delBtn = new JButton("Delete");
 	 
-	 
-	 {
-		 try {
-			    Long[] titleCmb = new Long[10];
-			    int i = 0;
-			    
-			    LaboratoryClient c1 = new LaboratoryClient();
-				List<Laboratory> lista = c1.getAllLaboratories();
-				for (Laboratory iterator : lista) {
-					Long da = iterator.getLabId();
-					
-					titleCmb[i] = da;
-					i++;
+//	 JComboBox labsList = new JComboBox();
+//
+//	 {
+//		 try {
+//			    Long[] titleCmb = new Long[10];
+//			    int i = 0;
+//			    
+//			    LaboratoryClient c1 = new LaboratoryClient();
+//				List<Laboratory> lista = c1.getAllLaboratories();
+//				for (Laboratory iterator : lista) {
+//					Long da = iterator.getLaboratoryUid();
+//					
+//					titleCmb[i] = da;
+//					i++;
+//
+//				}
+//				
+//				labsList = new JComboBox(titleCmb);
+//
+//			} catch (Exception e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		 }
+	 JComboBox labsList = new JComboBox();
 
-				}
-				
-				labsList = new JComboBox(titleCmb);
-
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		 }
-	 
 	 
 	public LabsFrame()
 	{
@@ -141,34 +142,53 @@ public class LabsFrame extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == delBtn) {
-			LaboratoryClient c1 = new LaboratoryClient();
 			
-			try {
-				c1.getLabById(delTxt.getText());
-			} catch (Exception e2) {
-				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(null, "Laboratory does not exist!", "Error", JOptionPane.ERROR_MESSAGE);
-				return;
+			if (delTxt.getText().trim().isEmpty()) 
+			{
+				JOptionPane.showMessageDialog(null, "No field can be left empty!", "Error", JOptionPane.ERROR_MESSAGE);
+			} 
+			else
+			{
+				LaboratoryClient c1 = new LaboratoryClient();
+				
+				try {
+					c1.getLabById(delTxt.getText());
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Laboratory does not exist!", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				try {
+					c1.deleteLaboratoryById(delTxt.getText());
+					JOptionPane.showMessageDialog(null, "Laboratory succesfuly deleted!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
-			try {
-				c1.deleteLaboratoryById(delTxt.getText());
-				JOptionPane.showMessageDialog(null, "Laboratory succesfuly deleted!", "Info", JOptionPane.INFORMATION_MESSAGE);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			
+			
 		}
 		if (e.getSource() == createLabBtn) {
 			LaboratoryClient c1 = new LaboratoryClient();
 			
-			try {
-				c1.postLab(curriculaTxt.getText(), dateTxt.getText(), descriptionTxt.getText(), Long.parseLong(numberTxt.getText()), titleTxt.getText());
-				JOptionPane.showMessageDialog(null, "Laboratory succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
+			if (curriculaTxt.getText().trim().isEmpty() || dateTxt.getText().trim().isEmpty() || descriptionTxt.getText().trim().isEmpty() || titleTxt.getText().trim().isEmpty() ) 
+			{
+				JOptionPane.showMessageDialog(null, "No field can be left empty!", "Error", JOptionPane.ERROR_MESSAGE);
 
-			} catch (NumberFormatException e1) {
-				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(null, "Invalid format!", "Error", JOptionPane.ERROR_MESSAGE);
 			}
+			else 
+			{
+				try {
+					c1.postLab(curriculaTxt.getText(), dateTxt.getText(), descriptionTxt.getText(), Long.parseLong(numberTxt.getText()), titleTxt.getText());
+					JOptionPane.showMessageDialog(null, "Laboratory succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
+
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Invalid format!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+			
 		}
 			
 
