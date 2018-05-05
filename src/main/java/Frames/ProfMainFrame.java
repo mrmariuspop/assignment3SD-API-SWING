@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import Clients.StudentClient;
 import Clients.SubmissionClient;
+import Services.EmailUtil;
 import models.Student;
 import models.Submission;
 
@@ -33,33 +34,33 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 
 	 JLabel avaiLbl = new JLabel("Available Students");
 	 
-//	 JComboBox studentsIds = new JComboBox();
-//	 
-//	 {
-//	 try {
-//		    Long[] idsArray = new Long[10];
-//		    int i = 0;
-//		    
-//		    StudentClient x = new StudentClient();
-//			List<Student> lista = x.getAllStudents();
-//			
-//			for (Student iterator : lista) {
-//				Long da = iterator.getStudentId();
-//				
-//				idsArray[i] = da;
-//				i++;
-//
-//			}
-//			
-//			studentsIds = new JComboBox(idsArray);
-//
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//	 }
-//	 
 	 JComboBox studentsIds = new JComboBox();
+	 
+	 {
+	 try {
+		    Long[] idsArray = new Long[10];
+		    int i = 0;
+		    
+		    StudentClient x = new StudentClient();
+			List<Student> lista = x.getAllStudents();
+			
+			for (Student iterator : lista) {
+				Long da = iterator.getStudentId();
+				
+				idsArray[i] = da;
+				i++;
+
+			}
+			
+			studentsIds = new JComboBox(idsArray);
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	 }
+//	 
+//	 JComboBox studentsIds = new JComboBox();
 
 	 
 //	 JComboBox subIds = new JComboBox();
@@ -211,6 +212,21 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 			{
 			try {
 				StudentClient.postStudentAsProff(aux);
+				
+				
+				Student studentByEmail = StudentClient.getStudentByEmail(emailTxt.getText());
+				
+				EmailUtil em1 = new EmailUtil();
+				
+				String from = "mpop993";
+			        String pass = "parolatest";
+			        String[] to = { aux }; // list of recipient email addresses
+			        String subject = "JavaMailAPI";
+			        String body = "Your token is : \n\n";
+			        
+			        em1.sendFromGMail(from, pass, to, subject, body+studentByEmail.getToken());
+			        
+			        
 				JOptionPane.showMessageDialog(null, "Student succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
 
 			} catch (Exception e1) {

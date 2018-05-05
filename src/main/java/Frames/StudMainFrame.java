@@ -17,7 +17,7 @@ import Clients.StudentClient;
 import Clients.SubmissionClient;
 import Services.ReadFromFile;
 import models.Laboratory;
-import models.Student;
+import models.Submission;
 
 		
 public class StudMainFrame extends JFrame implements ActionListener {
@@ -62,32 +62,32 @@ public class StudMainFrame extends JFrame implements ActionListener {
 //			e1.printStackTrace();
 //		}
 //	 }
-//	 JComboBox labs = new JComboBox();
-////	 
-//	 {
-//	 try {
-//		    Long[] idsArray = new Long[10];
-//		    int i = 0;
-//		    
-//		    StudentClient x = new StudentClient();
-//			List<Laboratory> lista = x.getAllLaboratories();
-//			
-//			for (Laboratory iterator : lista) {
-//				Long da = iterator.getLaboratoryUid();
-//				
-//				idsArray[i] = da;
-//				i++;
-//
-//			}
-//			
-//			labs = new JComboBox(idsArray);
-//
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//	 }
 	 JComboBox labs = new JComboBox();
+//	 
+	 {
+	 try {
+		    Long[] idsArray = new Long[10];
+		    int i = 0;
+		    
+		    StudentClient x = new StudentClient();
+			List<Laboratory> lista = x.getAllLaboratories();
+			
+			for (Laboratory iterator : lista) {
+				Long da = iterator.getLaboratoryUid();
+				
+				idsArray[i] = da;
+				i++;
+
+			}
+			
+			labs = new JComboBox(idsArray);
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	 }
+//	 JComboBox labs = new JComboBox();
 	 
 	 
 	 JLabel deleteLbl = new JLabel("Available Laboratories");
@@ -174,27 +174,40 @@ public class StudMainFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == createSubmissionBtn) {
 			
-			if(assIdTxt.getText().trim().isEmpty() || dateTxt.getText().trim().isEmpty()) 
+			SubmissionClient sub1 = new SubmissionClient();
+			List <Submission> ll1 = sub1.getAllSubmissions();
+			
+			if (ll1.size() >3) 
 			{
-				JOptionPane.showMessageDialog(null, "No field can be left empty!", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Maximum submission no. reached!", "Error", JOptionPane.ERROR_MESSAGE);
 
 			}
 			else 
 			{
-				try {
-					ReadFromFile a1 = new ReadFromFile();
-					String pe = a1.readFrom("Login.txt");
-					
-					SubmissionClient.postSubmission(assIdTxt.getText(), dateTxt.getText(), pe);
-					JOptionPane.showMessageDialog(null, "Submission succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
-					
-					StudMainFrame p1 = new StudMainFrame();
+				if(assIdTxt.getText().trim().isEmpty() || dateTxt.getText().trim().isEmpty()) 
+				{
+					JOptionPane.showMessageDialog(null, "No field can be left empty!", "Error", JOptionPane.ERROR_MESSAGE);
 
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				}
+				else 
+				{
+					try {
+						ReadFromFile a1 = new ReadFromFile();
+						String pe = a1.readFrom("Login.txt");
+						
+						SubmissionClient.postSubmission(assIdTxt.getText(), dateTxt.getText(), pe);
+						JOptionPane.showMessageDialog(null, "Submission succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
+						
+						StudMainFrame p1 = new StudMainFrame();
+
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
+			
+		
 			
 			
 		}

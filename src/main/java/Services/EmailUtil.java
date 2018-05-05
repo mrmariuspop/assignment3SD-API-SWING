@@ -1,57 +1,57 @@
 package Services;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
 
 public class EmailUtil {
 
-	/**
-	 * Utility method to send simple HTML email
-	 * @param session
-	 * @param toEmail
-	 * @param subject
-	 * @param body
-	 */
-	public static void sendEmail(Session session, String toEmail, String subject, String body){
-		try
-	    {
-	      MimeMessage msg = new MimeMessage(session);
-	      //set message headers
-	      msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-	      msg.addHeader("format", "flowed");
-	      msg.addHeader("Content-Transfer-Encoding", "8bit");
+    private static String USER_NAME = "mpop993";  // GMail user name (just the part before "@gmail.com")
+    private static String PASSWORD = "parolatest"; // GMail password
+    private static String RECIPIENT = "mrmariuspop@gmail.com";
 
-	      msg.setFrom(new InternetAddress("no_reply@example.com", "NoReply-JD"));
 
-	      msg.setReplyTo(InternetAddress.parse("no_reply@example.com", false));
+//        sendFromGMail(from, pass, to, subject, body);
+   
 
-	      msg.setSubject(subject, "UTF-8");
+    public void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
 
-	      msg.setText(body, "UTF-8");
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
 
-	      msg.setSentDate(new Date());
+        try {
+            message.setFrom(new InternetAddress(from));
+            InternetAddress[] toAddress = new InternetAddress[to.length];
 
-	      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-	      System.out.println("Message is ready");
-    	  Transport.send(msg);  
+            // To get the array of addresses
+            for( int i = 0; i < to.length; i++ ) {
+                toAddress[i] = new InternetAddress(to[i]);
+            }
 
-	      System.out.println("EMail Sent Successfully!!");
-	    }
-	    catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	}
+            for( int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+
+            message.setSubject(subject);
+            message.setText(body);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        }
+        catch (AddressException ae) {
+            ae.printStackTrace();
+        }
+        catch (MessagingException me) {
+            me.printStackTrace();
+        }
+    }
 }

@@ -430,4 +430,48 @@ public class StudentClient {
         }
         return null;
     }
+    
+    public static Student getStudentByEmail(String email) {
+        try {
+
+            DefaultHttpClient httpClient = new DefaultHttpClient();
+            HttpGet getRequest = new HttpGet(
+                    "http://localhost:8080/students/getTokenByEmail?email="+email + 
+                    "");
+            getRequest.addHeader("accept", "application/json");
+
+            HttpResponse response = httpClient.execute(getRequest);
+
+            if (response.getStatusLine().getStatusCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : "
+                        + response.getStatusLine().getStatusCode());
+            }
+
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader((response.getEntity().getContent())));
+
+            String output;
+            System.out.println("Output from Server .... \n");
+            
+            ObjectMapper objMap = new ObjectMapper();
+            Student tabusca = new Student();
+            output = br.readLine();
+            tabusca = objMap.readValue(output, Student.class);
+            
+            System.out.println(tabusca.toString());
+            
+            
+            httpClient.getConnectionManager().shutdown();
+            return tabusca;
+            
+        } catch (ClientProtocolException e) {
+
+            e.printStackTrace();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

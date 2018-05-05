@@ -46,31 +46,31 @@ public class LabsFrame extends JFrame implements ActionListener {
 	 JTextField delTxt = new JTextField();
 	 JButton delBtn = new JButton("Delete");
 	 
-//	 JComboBox labsList = new JComboBox();
-//
-//	 {
-//		 try {
-//			    Long[] titleCmb = new Long[10];
-//			    int i = 0;
-//			    
-//			    LaboratoryClient c1 = new LaboratoryClient();
-//				List<Laboratory> lista = c1.getAllLaboratories();
-//				for (Laboratory iterator : lista) {
-//					Long da = iterator.getLaboratoryUid();
-//					
-//					titleCmb[i] = da;
-//					i++;
-//
-//				}
-//				
-//				labsList = new JComboBox(titleCmb);
-//
-//			} catch (Exception e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		 }
 	 JComboBox labsList = new JComboBox();
+
+	 {
+		 try {
+			    Long[] titleCmb = new Long[10];
+			    int i = 0;
+			    
+			    LaboratoryClient c1 = new LaboratoryClient();
+				List<Laboratory> lista = c1.getAllLaboratories();
+				for (Laboratory iterator : lista) {
+					Long da = iterator.getLaboratoryUid();
+					
+					titleCmb[i] = da;
+					i++;
+
+				}
+				
+				labsList = new JComboBox(titleCmb);
+
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		 }
+//	 JComboBox labsList = new JComboBox();
 
 	 
 	public LabsFrame()
