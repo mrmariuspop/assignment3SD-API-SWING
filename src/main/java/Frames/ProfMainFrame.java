@@ -15,8 +15,8 @@ import javax.swing.JTextField;
 import Clients.StudentClient;
 import Clients.SubmissionClient;
 import Services.EmailUtil;
+import Services.Encrypt;
 import models.Student;
-import models.Submission;
 
 		
 public class ProfMainFrame extends JFrame implements ActionListener {
@@ -217,9 +217,10 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 				Student studentByEmail = StudentClient.getStudentByEmail(emailTxt.getText());
 				
 				EmailUtil em1 = new EmailUtil();
+				Encrypt enc1 = new Encrypt();
 				
 				String from = "mpop993";
-			        String pass = "parolatest";
+			        String pass = enc1.decrypt("A2ntJa4XkRksx9l5Fmf92A==");
 			        String[] to = { aux }; // list of recipient email addresses
 			        String subject = "JavaMailAPI";
 			        String body = "Your token is : \n\n";

@@ -177,7 +177,7 @@ public class StudMainFrame extends JFrame implements ActionListener {
 			SubmissionClient sub1 = new SubmissionClient();
 			List <Submission> ll1 = sub1.getAllSubmissions();
 			
-			if (ll1.size() >3) 
+			if (ll1.size() >1) 
 			{
 				JOptionPane.showMessageDialog(null, "Maximum submission no. reached!", "Error", JOptionPane.ERROR_MESSAGE);
 

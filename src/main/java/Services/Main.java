@@ -1,11 +1,11 @@
 
 package Services;
 
-import Frames.LoginFrame;
+import Frames.ExerciseFrame;
 
 public class Main {
 public static void main(String[] args) {
-	LoginFrame a= new LoginFrame();
+	ExerciseFrame a= new ExerciseFrame();
 	
 	}
 

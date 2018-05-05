@@ -2,6 +2,8 @@ package Frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -12,6 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Clients.AssigClient;
+import Clients.StudentClient;
+import Services.EmailUtil;
+import Services.Encrypt;
+import models.Student;
 
 		
 public class AssignmentFrame extends JFrame implements ActionListener {
@@ -133,7 +139,12 @@ public class AssignmentFrame extends JFrame implements ActionListener {
 
 	
 	public void actionPerformed(ActionEvent e) {
+		Encrypt anca=null;
 		if (e.getSource() == createAssBtn) {
+
+			
+			
+			
 			
 			
 			if (deadTxt.getText().trim().isEmpty() || descTxt.getText().trim().isEmpty() || labTxt.getText().trim().isEmpty() || nameTxt.getText().trim().isEmpty())
@@ -142,9 +153,29 @@ public class AssignmentFrame extends JFrame implements ActionListener {
 			}
 			else 
 			{
-				AssigClient c1 = new AssigClient();
-				c1.postAssig(deadTxt.getText(),	descTxt.getText(), Long.parseLong(labTxt.getText()), nameTxt.getText());
+				AssigClient c2 = new AssigClient();
+				c2.postAssig(deadTxt.getText(),	descTxt.getText(), Long.parseLong(labTxt.getText()), nameTxt.getText());
 				JOptionPane.showMessageDialog(null, "Assignment succesfuly created", "Info", JOptionPane.INFORMATION_MESSAGE);
+				try {
+					anca = new Encrypt();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
+				
+				StudentClient c1 = new StudentClient();
+				List<Student> studs = new ArrayList<Student>();
+
+				studs = c1.getAllStudents();			
+				
+				for (Student student : studs) {
+					String[] to = {student.getEmail()};
+					EmailUtil mam1 = new EmailUtil();
+					mam1.sendFromGMail("mpop993", anca.decrypt("A2ntJa4XkRksx9l5Fmf92A=="), to, "Assignment", "Hello, \nNew assignment is available!\n\n"+"Assignment details: \n"+"Deadline:"+deadTxt.getText()+"\nDesctiption : "+descTxt.getText()+"\nName : "+nameTxt.getText()+"");
+				}
 			}
 			
 
