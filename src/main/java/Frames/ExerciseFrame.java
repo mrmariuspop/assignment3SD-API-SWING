@@ -2,6 +2,7 @@ package Frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import javax.swing.JTextField;
 
 import Clients.AdminClient;
 import Clients.StudentClient;
+import Services.WriteToFile;
 
 		
 public class ExerciseFrame extends JFrame implements ActionListener {
@@ -88,6 +90,14 @@ public class ExerciseFrame extends JFrame implements ActionListener {
 			
 			if (succesfulForStudent && !succesfulForAdmin) 
 			{
+				WriteToFile ob = new WriteToFile();
+				String str = String.valueOf(StudentClient.getStudentByEmail(userTxt.getText()).getStudentUid());
+				try {
+					ob.whenWriteStringUsingBufferedWritter_thenCorrect(str, "Login.txt");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				StudMainFrame f1 = new StudMainFrame();
 			}
 			else 

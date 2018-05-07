@@ -148,6 +148,13 @@ public class AttFrame extends JFrame implements ActionListener {
 		if (e.getSource() == delBtn) {
 			AttendenceClient c1 = new AttendenceClient();
 			
+			try {
+				c1.getAttendencetById(delTxt.getText());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Attendence not found!", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			if(delTxt.getText().trim().isEmpty())
 			{
 				JOptionPane.showMessageDialog(null, "Field can not be left empty!", "Error", JOptionPane.ERROR_MESSAGE);

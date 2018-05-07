@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -16,6 +17,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import models.Laboratory;
@@ -105,26 +107,25 @@ public class SubmissionClient {
     			//System.out.println(output);
     		}
             
-            //System.out.println(file);
+            System.out.println("Fisierul este \n" + file);
+            if(file.startsWith("[") == false)
+            	file = " ["+file+"]";
             
             JSONArray jsonArray= new JSONArray(file);
             List<Submission> list = new ArrayList<Submission>();
             
             
+            System.out.println(jsonArray.length());
             for(int i=0; i<jsonArray.length(); i++) {
-            	Submission p = new Submission();
+            	Submission p = new Submission(); 
             	
-            	
-            	p.setStudent(jsonArray.getJSONObject(i).getLong("student"));
             	p.setAssignment(jsonArray.getJSONObject(i).getLong("assignment"));
             	p.setDate(jsonArray.getJSONObject(i).getString("date"));
             	p.setGrade(jsonArray.getJSONObject(i).getLong("grade"));
+            	p.setStudent(jsonArray.getJSONObject(i).getLong("student"));
             	
         		list.add(p);
            }
-            
-            
-            
             
             httpClient.getConnectionManager().shutdown();
             return list;

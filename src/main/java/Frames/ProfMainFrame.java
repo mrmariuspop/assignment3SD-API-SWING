@@ -17,6 +17,7 @@ import Clients.SubmissionClient;
 import Services.EmailUtil;
 import Services.Encrypt;
 import models.Student;
+import models.Submission;
 
 		
 public class ProfMainFrame extends JFrame implements ActionListener {
@@ -34,7 +35,7 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 
 	 JLabel avaiLbl = new JLabel("Available Students");
 	 
-	 JComboBox studentsIds = new JComboBox();
+//	 JComboBox studentsIds = new JComboBox();
 	 
 	 {
 	 try {
@@ -59,37 +60,37 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 			e1.printStackTrace();
 		}
 	 }
-//	 
-//	 JComboBox studentsIds = new JComboBox();
+	 
+	 JComboBox studentsIds = new JComboBox();
 
 	 
-//	 JComboBox subIds = new JComboBox();
-//	 
-//	 {
-//	 try {
-//		    Long[] idsArray = new Long[10];
-//		    int i = 0;
-//		    
-//		    SubmissionClient x = new SubmissionClient();
-//			List<Submission> lista = x.getAllSubmissions();
-//			
-//			for (Submission iterator : lista) {
-//				Long da = iterator.getSubmissionId();
-//				
-//				idsArray[i] = da;
-//				i++;
-//
-//			}
-//			
-//			subIds = new JComboBox(idsArray);
-//
-//		} catch (Exception e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//	 }
-	 
 	 JComboBox subIds = new JComboBox();
+	 
+	 {
+	 try {
+		    Long[] idsArray = new Long[10];
+		    int i = 0;
+		    
+		    SubmissionClient x = new SubmissionClient();
+			List<Submission> lista = x.getAllSubmissions();
+			
+			for (Submission iterator : lista) {
+				Long da = iterator.getSubmissionId();
+				
+				idsArray[i] = da;
+				i++;
+
+			}
+			
+			subIds = new JComboBox(idsArray);
+
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	 }
+	 
+//	 JComboBox subIds = new JComboBox();
 
 
 	 JLabel deleteLbl = new JLabel("Delete Student");
@@ -211,24 +212,39 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 			if (aux.contains("@")) 
 			{
 			try {
-				StudentClient.postStudentAsProff(aux);
+				Student pentruMail = new Student();
+				
+				try {
+					pentruMail = StudentClient.getStudentByEmail(aux);
+					JOptionPane.showMessageDialog(null, "Email already exists", "Error", JOptionPane.ERROR_MESSAGE);	
+					return;
+
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					StudentClient.postStudentAsProff(aux);	
+					Student studentByEmail = StudentClient.getStudentByEmail(emailTxt.getText());
+					
+					
+					EmailUtil em1 = new EmailUtil();
+					Encrypt enc1 = new Encrypt();
+					
+					String from = "mpop993";
+				        String pass = enc1.decrypt("A2ntJa4XkRksx9l5Fmf92A==");
+				        String[] to = { aux }; // list of recipient email addresses
+				        String subject = "JavaMailAPI";
+				        String body = "Your token is : \n\n";
+				        
+				        em1.sendFromGMail(from, pass, to, subject, body+studentByEmail.getToken());
+				        
+				        
+					JOptionPane.showMessageDialog(null, "Student succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
+					}
 				
 				
-				Student studentByEmail = StudentClient.getStudentByEmail(emailTxt.getText());
 				
-				EmailUtil em1 = new EmailUtil();
-				Encrypt enc1 = new Encrypt();
 				
-				String from = "mpop993";
-			        String pass = enc1.decrypt("A2ntJa4XkRksx9l5Fmf92A==");
-			        String[] to = { aux }; // list of recipient email addresses
-			        String subject = "JavaMailAPI";
-			        String body = "Your token is : \n\n";
-			        
-			        em1.sendFromGMail(from, pass, to, subject, body+studentByEmail.getToken());
-			        
-			        
-				JOptionPane.showMessageDialog(null, "Student succesfuly created!", "Info", JOptionPane.INFORMATION_MESSAGE);
+				
+				
 
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block

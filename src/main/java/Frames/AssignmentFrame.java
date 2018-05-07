@@ -174,7 +174,7 @@ public class AssignmentFrame extends JFrame implements ActionListener {
 				for (Student student : studs) {
 					String[] to = {student.getEmail()};
 					EmailUtil mam1 = new EmailUtil();
-					mam1.sendFromGMail("mpop993", anca.decrypt("A2ntJa4XkRksx9l5Fmf92A=="), to, "Assignment", "Hello, \nNew assignment is available!\n\n"+"Assignment details: \n"+"Deadline:"+deadTxt.getText()+"\nDesctiption : "+descTxt.getText()+"\nName : "+nameTxt.getText()+"");
+					mam1.sendFromGMail("mpop993", anca.decrypt("A2ntJa4XkRksx9l5Fmf92A=="), to, "Assignment", "Hello, \nNew assignment is available!\n\n"+"Assignment details: \n"+"Deadline:"+deadTxt.getText()+"\nDescription : "+descTxt.getText()+"\nName : "+nameTxt.getText()+"");
 				}
 			}
 			

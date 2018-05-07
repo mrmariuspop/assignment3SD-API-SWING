@@ -106,6 +106,8 @@ public class LaboratoryClient {
     		}
             
             //System.out.println(file);
+            if(file.startsWith("[") == false)
+            	file = " ["+file+"]";
             
             JSONArray jsonArray= new JSONArray(file);
             List<Laboratory> list = new ArrayList<Laboratory>();

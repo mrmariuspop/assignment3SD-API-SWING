@@ -17,6 +17,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -187,6 +188,9 @@ public class StudentClient {
     			//System.out.println(output);
     		}
             
+            if(file.startsWith("[") == false)
+            	file = " ["+file+"]";
+            
             //System.out.println(file);
             
             JSONArray jsonArray= new JSONArray(file);
@@ -247,16 +251,29 @@ public class StudentClient {
             String output;
             System.out.println("Output from Server .... \n");
             
-            ObjectMapper objMap = new ObjectMapper();
-            Student tabusca = new Student();
+////            ObjectMapper objMap = new ObjectMapper();
+            Student p = new Student();
             output = br.readLine();
-            tabusca = objMap.readValue(output, Student.class);
+//            tabusca = objMap.readValue(output, Student.class);
             
-            System.out.println(tabusca.toString());
+            JSONObject j = new JSONObject(output);
+            
+        	p.setStudentId(j.getLong("studentId"));
+    		p.setEmail(j.getString("email"));
+    		p.setPassword(j.getString("password"));
+    		p.setFullname(j.getString("fullname"));
+    		p.setGrupa(j.getLong("grupa"));
+    		p.setHobby(j.getString("hobby"));
+    		p.setToken(j.getString("token"));
+    		p.setAssigmentStudent(null);
+    		p.setAttendances(null);
+    		p.setStudentUid(null);
+            
+            System.out.println(p.toString());
             
             
             httpClient.getConnectionManager().shutdown();
-            return tabusca;
+            return p;
             
         } catch (ClientProtocolException e) {
 

@@ -2,6 +2,7 @@ package Frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -62,32 +63,32 @@ public class StudMainFrame extends JFrame implements ActionListener {
 //			e1.printStackTrace();
 //		}
 //	 }
-	 JComboBox labs = new JComboBox();
-//	 
-	 {
-	 try {
-		    Long[] idsArray = new Long[10];
-		    int i = 0;
-		    
-		    StudentClient x = new StudentClient();
-			List<Laboratory> lista = x.getAllLaboratories();
-			
-			for (Laboratory iterator : lista) {
-				Long da = iterator.getLaboratoryUid();
-				
-				idsArray[i] = da;
-				i++;
-
-			}
-			
-			labs = new JComboBox(idsArray);
-
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	 }
 //	 JComboBox labs = new JComboBox();
+////	 
+//	 {
+//	 try {
+//		    Long[] idsArray = new Long[10];
+//		    int i = 0;
+//		    
+//		    StudentClient x = new StudentClient();
+//			List<Laboratory> lista = x.getAllLaboratories();
+//			
+//			for (Laboratory iterator : lista) {
+//				Long da = iterator.getLaboratoryUid();
+//				
+//				idsArray[i] = da;
+//				i++;
+//
+//			}
+//			
+//			labs = new JComboBox(idsArray);
+//
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	 }
+	 JComboBox labs = new JComboBox();
 	 
 	 
 	 JLabel deleteLbl = new JLabel("Available Laboratories");
@@ -177,7 +178,7 @@ public class StudMainFrame extends JFrame implements ActionListener {
 			SubmissionClient sub1 = new SubmissionClient();
 			List <Submission> ll1 = sub1.getAllSubmissions();
 			
-			if (ll1.size() >1) 
+			if (ll1.size() >2) 
 			{
 				JOptionPane.showMessageDialog(null, "Maximum submission no. reached!", "Error", JOptionPane.ERROR_MESSAGE);
 
