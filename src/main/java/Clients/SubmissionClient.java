@@ -125,6 +125,7 @@ public class SubmissionClient {
             	p.setStudent(jsonArray.getJSONObject(i).getLong("student"));
             	
         		list.add(p);
+        		p = null;
            }
             
             httpClient.getConnectionManager().shutdown();

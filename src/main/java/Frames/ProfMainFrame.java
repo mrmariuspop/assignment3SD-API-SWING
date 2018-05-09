@@ -35,62 +35,62 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 
 	 JLabel avaiLbl = new JLabel("Available Students");
 	 
-//	 JComboBox studentsIds = new JComboBox();
-	 
-	 {
-	 try {
-		    Long[] idsArray = new Long[10];
-		    int i = 0;
-		    
-		    StudentClient x = new StudentClient();
-			List<Student> lista = x.getAllStudents();
-			
-			for (Student iterator : lista) {
-				Long da = iterator.getStudentId();
-				
-				idsArray[i] = da;
-				i++;
-
-			}
-			
-			studentsIds = new JComboBox(idsArray);
-
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	 }
-	 
 	 JComboBox studentsIds = new JComboBox();
-
 	 
-	 JComboBox subIds = new JComboBox();
-	 
-	 {
-	 try {
-		    Long[] idsArray = new Long[10];
-		    int i = 0;
-		    
-		    SubmissionClient x = new SubmissionClient();
-			List<Submission> lista = x.getAllSubmissions();
-			
-			for (Submission iterator : lista) {
-				Long da = iterator.getSubmissionId();
-				
-				idsArray[i] = da;
-				i++;
+//	 {
+//	 try {
+//		    Long[] idsArray = new Long[10];
+//		    int i = 0;
+//		    
+//		    StudentClient x = new StudentClient();
+//			List<Student> lista = x.getAllStudents();
+//			
+//			for (Student iterator : lista) {
+//				Long da = iterator.getStudentId();
+//				
+//				idsArray[i] = da;
+//				i++;
+//
+//			}
+//			
+//			studentsIds = new JComboBox(idsArray);
+//
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	 }
+//	 
+//	 JComboBox studentsIds = new JComboBox();
 
-			}
-			
-			subIds = new JComboBox(idsArray);
-
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	 }
 	 
 //	 JComboBox subIds = new JComboBox();
+//	 
+//	 {
+//	 try {
+//		    Long[] idsArray = new Long[10];
+//		    int i = 0;
+//		    
+//		    SubmissionClient x = new SubmissionClient();
+//			List<Submission> lista = x.getAllSubmissions();
+//			
+//			for (Submission iterator : lista) {
+//				Long da = iterator.getSubmissionId();
+//				
+//				idsArray[i] = da;
+//				i++;
+//
+//			}
+//			
+//			subIds = new JComboBox(idsArray);
+//
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//	 }
+	 
+	 JComboBox subIds = new JComboBox();
 
 
 	 JLabel deleteLbl = new JLabel("Delete Student");
@@ -127,7 +127,7 @@ public class ProfMainFrame extends JFrame implements ActionListener {
 		
 		frame.setVisible(true);
 		panel.setLayout(null);
-		
+		frame.getRootPane().setDefaultButton(createStudBtn);
 		panel.add(emailLbl);
 		panel.add(allSubLbl);
 		panel.add(emailTxt);

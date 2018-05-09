@@ -85,7 +85,8 @@ public class AssignmentFrame extends JFrame implements ActionListener {
 
 		JPanel panel = new JPanel();
 		frame.add(panel);
-		
+		frame.getRootPane().setDefaultButton(createAssBtn);
+
 		frame.setVisible(true);
 		panel.setLayout(null);
 //		

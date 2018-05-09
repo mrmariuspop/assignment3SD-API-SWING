@@ -17,13 +17,15 @@ import Clients.AdminClient;
 public class ProfLoginFrame extends JFrame implements ActionListener {
 
 	 JFrame frame = new JFrame("Prof Login Frame");
-	
+	 
+		
 	 JLabel userLbl = new JLabel("username");
 	 JTextField userTxt = new JTextField();
 	 JLabel passLbl = new JLabel("password");
 	 JPasswordField passTxt = new JPasswordField();
 	 
 	 JButton login = new JButton("Login");
+	 
 	 
 	 
 	public ProfLoginFrame()
@@ -33,8 +35,9 @@ public class ProfLoginFrame extends JFrame implements ActionListener {
 
 		JPanel panel = new JPanel();
 		frame.add(panel);
-		
+		frame.getRootPane().setDefaultButton(login);
 		frame.setVisible(true);
+		frame.getRootPane().setDefaultButton(login);
 		panel.setLayout(null);
 		
 		panel.add(userLbl);

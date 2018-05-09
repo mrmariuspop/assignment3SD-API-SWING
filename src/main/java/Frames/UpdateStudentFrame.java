@@ -38,7 +38,7 @@ public class UpdateStudentFrame extends JFrame implements ActionListener {
 	{
 		
 		frame.setSize(300, 350);
-
+		frame.getRootPane().setDefaultButton(register);
 		JPanel panel = new JPanel();
 		frame.add(panel);
 		

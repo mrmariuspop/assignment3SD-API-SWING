@@ -210,6 +210,7 @@ public class StudentClient {
         		p.setAttendances(null);
         		p.setStudentUid(null);
         		list.add(p);
+        		p=null;
            }
             
             

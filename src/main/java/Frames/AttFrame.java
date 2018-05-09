@@ -77,7 +77,8 @@ public class AttFrame extends JFrame implements ActionListener {
 		frame.setVisible(true);
 		panel.setLayout(null);
 //		
-		
+		frame.getRootPane().setDefaultButton(createAttBtn);
+
 		panel.add(curriculaLbl);
 		panel.add(deadTxt);
 		panel.add(createAttBtn);

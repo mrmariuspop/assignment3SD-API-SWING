@@ -123,6 +123,7 @@ public class LaboratoryClient {
             	p.setNumber(jsonArray.getJSONObject(i).getLong("number"));
             	p.setTitle(jsonArray.getJSONObject(i).getString("title"));
         		list.add(p);
+        		p=null;
            }
             
             

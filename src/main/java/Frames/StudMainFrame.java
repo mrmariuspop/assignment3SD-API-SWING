@@ -112,7 +112,7 @@ public class StudMainFrame extends JFrame implements ActionListener {
 
 		JPanel panel = new JPanel();
 		frame.add(panel);
-		
+		frame.getRootPane().setDefaultButton(createSubmissionBtn);
 		frame.setVisible(true);
 		panel.setLayout(null);
 		

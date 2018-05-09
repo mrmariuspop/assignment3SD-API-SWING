@@ -35,7 +35,7 @@ public class StudLoginFrame extends JFrame implements ActionListener {
 
 		JPanel panel = new JPanel();
 		frame.add(panel);
-		
+		frame.getRootPane().setDefaultButton(login);
 		frame.setVisible(true);
 		panel.setLayout(null);
 		
